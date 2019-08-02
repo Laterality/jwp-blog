@@ -2,10 +2,7 @@ package techcourse.myblog.domain;
 
 import techcourse.myblog.web.dto.ArticleRequestDto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -17,18 +14,23 @@ public class Article {
     private String title;
     private String coverUrl;
     private String contents;
+    @ManyToOne
+    private User author;
 
-    public static Article of(Long id, String title, String coverUrl, String contents) {
+    private Article() {}
+
+    public static Article of(Long id, String title, String coverUrl, String contents, User author) {
         Article newArticle = new Article();
         newArticle.id = id;
         newArticle.title = title;
         newArticle.coverUrl = coverUrl;
         newArticle.contents = contents;
+        newArticle.author = author;
         return newArticle;
     }
 
-    public static Article of(String title, String coverUrl, String content) {
-        return of(null, title, coverUrl, content);
+    public static Article of(String title, String coverUrl, String content, User author) {
+        return of(null, title, coverUrl, content, author);
     }
 
     public static Article from(ArticleRequestDto dto) {
@@ -66,14 +68,11 @@ public class Article {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Article article = (Article) o;
-        return Objects.equals(id, article.id) &&
-            Objects.equals(title, article.title) &&
-            Objects.equals(coverUrl, article.coverUrl) &&
-            Objects.equals(contents, article.contents);
+        return Objects.equals(id, article.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, coverUrl, contents);
+        return Objects.hash(id);
     }
 }
