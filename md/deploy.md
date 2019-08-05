@@ -53,5 +53,13 @@ docker run
 
 프로젝트 이름 입력 후 `Freestyle project` 선택하여 생성
 
+빌드(Shell) 스크립트
 
+```bash
+./gradlew clean build
+
+docker build --tag laterality/myblog:latest .
+docker stop myblog
+docker run --name myblog -p 8080:8080 -d laterality/myblog:latest
+```
 
