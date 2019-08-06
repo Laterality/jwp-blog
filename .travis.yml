@@ -3,7 +3,7 @@ services:
   - docker
 
 before_install:
-  - docker build -t laterality/myblog
+  - docker build -t laterality/myblog .
 
 deploy:
   provider: script
