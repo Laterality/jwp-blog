@@ -1,0 +1,9 @@
+language: java
+services:
+  - docker
+
+deploy:
+  provider: script
+  script: bash docker_push
+  on:
+    branch: feat/travis-itegration
