@@ -5,4 +5,3 @@
 docker rmi laterality/myblog:latest
 
 docker build -t laterality/myblog:latest .
-docker push laterality/myblog:latest

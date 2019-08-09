@@ -1,4 +1,5 @@
 #!/bin/bash
+docker push laterality/myblog:latest
 
 container_id_stop=$(docker ps -q --filter name=blog)
 
