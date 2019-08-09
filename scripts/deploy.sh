@@ -1,5 +1,5 @@
 #!/bin/bash
-docker push laterality/myblog:latest
+docker push laterality/jwp-blog:latest
 
 container_id_stop=$(docker ps -q --filter name=blog)
 

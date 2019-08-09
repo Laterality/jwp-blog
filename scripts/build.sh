@@ -2,6 +2,6 @@
 ./gradlew clean build
 
 # Remove existing image
-docker rmi laterality/myblog:latest
+docker rmi laterality/jwp-blog:latest
 
-docker build -t laterality/myblog:latest .
+docker build -t laterality/jwp-blog:latest .
