@@ -13,6 +13,9 @@ add-apt-repository \
     stable" && \
 apt-get update && \
 apt-get -y install docker-ce
-RUN apt-get install -y docker-ce
+
+RUN curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+RUN chmod 755 /usr/local/bin/docker-compose
+
 RUN usermod -a -G docker jenkins
 USER jenkins
