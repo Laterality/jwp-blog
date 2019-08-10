@@ -6,7 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import techcourse.myblog.application.dto.ArticleDto;
+import techcourse.myblog.application.dto.ArticleRequest;
 import techcourse.myblog.application.exception.NoArticleException;
 import techcourse.myblog.application.exception.NoUserException;
 import techcourse.myblog.application.exception.NotSameAuthorException;
@@ -45,7 +45,7 @@ public class ArticleServiceTests {
     private UserResponse userResponse = createUserResponse(USER_ID);
     private UserResponse notAuthorResponse = createUserResponse(NOT_AUTHOR_USER_ID);
     private Article article = spy(new Article(user, "title", "coverUrl", "contents"));
-    private ArticleDto articleDto = new ArticleDto(USER_ID, "title", "coverUrl", "contents");
+    private ArticleRequest articleRequest = new ArticleRequest(USER_ID, "title", "coverUrl", "contents");
 
 
     @BeforeEach
@@ -60,7 +60,7 @@ public class ArticleServiceTests {
     void 존재하지_않는_유저_게시글_생성_실패() {
         given(articleRepository.save(any())).willReturn(article);
         given(userService.findById(userResponse.getId())).willThrow(new NoUserException(""));
-        assertThrows(NoUserException.class, () -> articleService.post(articleDto, userResponse.getId()));
+        assertThrows(NoUserException.class, () -> articleService.post(articleRequest, userResponse.getId()));
     }
 
     @Test
@@ -69,7 +69,7 @@ public class ArticleServiceTests {
         given(articleRepository.save(any())).willReturn(article);
         given(user.getId()).willReturn(USER_ID);
 
-        articleService.post(articleDto, userResponse.getId());
+        articleService.post(articleRequest, userResponse.getId());
 
         verify(articleRepository).save(any());
     }
@@ -110,7 +110,7 @@ public class ArticleServiceTests {
     @Test
     void 존재하지_않는_게시물_수정_실패() {
         assertThrows(NoArticleException.class, () ->
-            articleService.update(articleDto, ARTICLE_ID, userResponse.getId()));
+            articleService.update(articleRequest, ARTICLE_ID, userResponse.getId()));
     }
 
     @Test
@@ -120,7 +120,7 @@ public class ArticleServiceTests {
         doReturn(false).when(article).matchAuthorId(NOT_AUTHOR_USER_ID);
 
         assertThrows(NotSameAuthorException.class, () ->
-            articleService.update(articleDto, ARTICLE_ID, notAuthorResponse.getId()));
+            articleService.update(articleRequest, ARTICLE_ID, notAuthorResponse.getId()));
     }
 
     @Test
@@ -128,7 +128,7 @@ public class ArticleServiceTests {
         given(articleRepository.findById(ARTICLE_ID)).willReturn(Optional.ofNullable(article));
         given(userService.findById(USER_ID)).willReturn(user);
 
-        assertDoesNotThrow(() -> articleService.update(articleDto, ARTICLE_ID, userResponse.getId()));
+        assertDoesNotThrow(() -> articleService.update(articleRequest, ARTICLE_ID, userResponse.getId()));
     }
 
     @Test

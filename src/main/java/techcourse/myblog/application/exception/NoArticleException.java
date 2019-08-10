@@ -1,6 +1,8 @@
 package techcourse.myblog.application.exception;
 
-public class NoArticleException extends RuntimeException {
+import java.util.NoSuchElementException;
+
+public class NoArticleException extends NoSuchElementException {
     public NoArticleException(String message) {
         super(message);
     }

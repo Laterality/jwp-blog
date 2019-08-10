@@ -12,6 +12,8 @@ import techcourse.myblog.application.dto.UserEditRequest;
 import techcourse.myblog.application.exception.*;
 import techcourse.myblog.web.dto.ErrorResponse;
 
+import java.util.NoSuchElementException;
+
 @ControllerAdvice
 public class BlogExceptionHandler {
     @ExceptionHandler(LoginException.class)
@@ -37,22 +39,7 @@ public class BlogExceptionHandler {
         return new RedirectView("/");
     }
 
-
-    @ExceptionHandler(NoUserException.class)
-    public RedirectView handleNoUserException(NoUserException e, RedirectAttributes redirectAttributes) {
-        ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
-        redirectAttributes.addFlashAttribute("error", errorMessage);
-        return new RedirectView("/");
-    }
-
-    @ExceptionHandler(NoArticleException.class)
-    public String handleNoArticleException(NoArticleException e, Model model) {
-        ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
-        model.addAttribute("error", errorMessage);
-        return "404";
-    }
-
-    @ExceptionHandler(CommentNotFoundException.class)
+    @ExceptionHandler(NoSuchElementException.class)
     public String handleCommentNotFoundException(CommentNotFoundException e, Model model) {
         ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
         model.addAttribute("error", errorMessage);

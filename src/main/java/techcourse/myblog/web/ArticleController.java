@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import techcourse.myblog.application.ArticleService;
 import techcourse.myblog.application.CommentService;
-import techcourse.myblog.application.dto.ArticleDto;
+import techcourse.myblog.application.dto.ArticleRequest;
 import techcourse.myblog.domain.Article;
 import techcourse.myblog.domain.Comment;
 import techcourse.myblog.web.dto.UserResponse;
@@ -49,9 +49,9 @@ public class ArticleController {
     }
 
     @PostMapping("/articles")
-    public String saveArticle(@Valid ArticleDto articleDto, HttpSession httpSession) {
+    public String saveArticle(@Valid ArticleRequest articleRequest, HttpSession httpSession) {
         UserResponse userResponse = (UserResponse) httpSession.getAttribute("user");
-        Long articleId = articleService.post(articleDto, userResponse.getId());
+        Long articleId = articleService.post(articleRequest, userResponse.getId());
 
         return "redirect:/articles/" + articleId;
     }
@@ -76,11 +76,11 @@ public class ArticleController {
     }
 
     @PutMapping("/articles/{articleId}")
-    public String editArticle(@PathVariable("articleId") long articleId, @ModelAttribute ArticleDto articleDto, HttpSession httpSession, Model model) {
+    public String editArticle(@PathVariable("articleId") long articleId, @ModelAttribute ArticleRequest articleRequest, HttpSession httpSession, Model model) {
         UserResponse userResponse = (UserResponse) httpSession.getAttribute("user");
 
-        articleService.update(articleDto, articleId, userResponse.getId());
-        model.addAttribute(ARTICLE_INFO, articleDto);
+        articleService.update(articleRequest, articleId, userResponse.getId());
+        model.addAttribute(ARTICLE_INFO, articleRequest);
 
         return "article";
     }

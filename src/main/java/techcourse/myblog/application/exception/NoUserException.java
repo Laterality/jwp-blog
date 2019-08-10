@@ -1,6 +1,8 @@
 package techcourse.myblog.application.exception;
 
-public class NoUserException extends RuntimeException {
+import java.util.NoSuchElementException;
+
+public class NoUserException extends NoSuchElementException {
     public NoUserException(String message) {
         super(message);
     }

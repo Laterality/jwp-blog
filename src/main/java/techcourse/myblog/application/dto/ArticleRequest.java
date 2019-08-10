@@ -5,7 +5,7 @@ import techcourse.myblog.domain.Article;
 import techcourse.myblog.domain.User;
 import techcourse.myblog.support.validator.TitleConstraint;
 
-public class ArticleDto {
+public class ArticleRequest {
     private Long id;
     @TitleConstraint
     private String title;
@@ -13,7 +13,7 @@ public class ArticleDto {
     private String coverUrl;
     private String contents;
 
-    public ArticleDto(Long id, String title, String coverUrl, String contents) {
+    public ArticleRequest(Long id, String title, String coverUrl, String contents) {
         this.id = id;
         this.title = title;
         this.coverUrl = coverUrl;

@@ -2,7 +2,7 @@ package techcourse.myblog.application;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import techcourse.myblog.application.dto.ArticleDto;
+import techcourse.myblog.application.dto.ArticleRequest;
 import techcourse.myblog.application.exception.NoArticleException;
 import techcourse.myblog.application.exception.NotSameAuthorException;
 import techcourse.myblog.domain.Article;
@@ -28,10 +28,10 @@ public class ArticleService {
         return articleRepository.findAll();
     }
 
-    public Long post(ArticleDto articleDto, Long authorId) {
+    public Long post(ArticleRequest articleRequest, Long authorId) {
         User author = userService.findById(authorId);
 
-        Article article = articleDto.toEntity(author);
+        Article article = articleRequest.toEntity(author);
         Article savedArticle = articleRepository.save(article);
         return savedArticle.getId();
     }
@@ -57,12 +57,11 @@ public class ArticleService {
         return articleRepository.existsByTitle(title);
     }
 
-    public void update(ArticleDto articleDto, Long articleId, Long userId) {
+    public void update(ArticleRequest articleRequest, Long articleId, Long userId) {
         Article article = findById(articleId);
 
         checkAuthenticatedAuthor(article, userId);
-
-        article.updateArticle(articleDto.toEntity(article.getAuthor()));
+        article.updateArticle(articleRequest.toEntity(article.getAuthor()));
     }
 
     public void deleteById(Long articleId, Long userId) {
