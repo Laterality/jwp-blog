@@ -40,7 +40,7 @@ public class BlogExceptionHandler {
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public String handleCommentNotFoundException(CommentNotFoundException e, Model model) {
+    public String handleNotFoundException(NoSuchElementException e, Model model) {
         ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
         model.addAttribute("error", errorMessage);
         return "404";
