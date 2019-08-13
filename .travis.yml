@@ -9,9 +9,16 @@ before_deploy:
   - docker build -t laterality/myblog:${DOCKER_IMAGE_VERSION} .
 
 deploy:
-  provider: script
-  script: bash docker_push
-
+  # deploy develop to the staging environment
+  - provider: script
+    script: bash docker_push.sh
+    on:
+      branch: feat/travis-integration
+  # deploy master to production
+  - provider: script
+    script: bash docker_push.sh
+    on:
+      branch: master
 branches:
   only:
     - master
