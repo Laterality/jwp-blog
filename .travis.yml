@@ -15,4 +15,4 @@ deploy:
 branches:
   only:
     - master
-    - develop
+    - feat/travis-integration
