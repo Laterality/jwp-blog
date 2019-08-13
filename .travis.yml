@@ -6,10 +6,13 @@ script:
   - ./gradlew build
 
 before_deploy:
-  - docker build -t laterality/myblog .
+  - docker build -t laterality/myblog:${DOCKER_IMAGE_VERSION} .
 
 deploy:
   provider: script
   script: bash docker_push
-  on:
-    branch: feat/travis-integration
+
+branches:
+  only:
+    - master
+    - develop
